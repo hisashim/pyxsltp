@@ -1,0 +1,12 @@
+Source: pyxsltp
+Section: interpreters
+Priority: extra
+Maintainer: Hisashi Morita <hisashim@workbook.org>
+Build-Depends: cdbs, debhelper (>= 5)
+Standards-Version: 3.8.0
+
+Package: pyxsltp
+Architecture: all
+Depends: ${misc:Depends}, python, python-lxml
+Description: XSLT processor extensible with Python
+ PyXSLTP is an XSLT processor extensible with Python.
