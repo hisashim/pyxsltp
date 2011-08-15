@@ -19,7 +19,7 @@ TAR_XVCS = tar --exclude=".svn" --exclude=".git" --exclude=".hg"
 PBUILDER = cowbuilder
 PBOPTS   = --hookdir=pbuilder-hooks \
            --bindmounts "/var/cache/pbuilder/result"
-DEBBUILDOPTS=
+DEBUILDOPTS=
 
 # directories and files
 
@@ -109,7 +109,7 @@ $(DEB).dsc: $(RELEASE).tar.gz
 	tar fxz $<
 	($(TAR_XVCS) -cf - debian) | (cd $(RELEASE) && tar xpf -)
 	cp $< $(DEBORIG).tar.gz
-	(cd $(RELEASE) && pdebuild --pbuilder $(PBUILDER) $(DEBBUILDOPTS); cd -)
+	(cd $(RELEASE) && pdebuild --pbuilder $(PBUILDER) $(DEBUILDOPTS); cd -)
 
 # cleaning
 
