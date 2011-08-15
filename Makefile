@@ -19,6 +19,7 @@ TAR_XVCS = tar --exclude=".svn" --exclude=".git" --exclude=".hg"
 PBUILDER = cowbuilder
 PBOPTS   = --hookdir=pbuilder-hooks \
            --bindmounts "/var/cache/pbuilder/result"
+DEBBUILDOPTS=
 
 # directories and files
 
