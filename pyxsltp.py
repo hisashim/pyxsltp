@@ -19,7 +19,8 @@ def apply(xsl_io, xsl_base_uri, doc_io, doc_base_uri,
     xslt = lxml.etree.parse(xsl_io, base_url=xsl_base_uri)
     transform  = lxml.etree.XSLT(xslt, extensions=extensions)
     doc_parser = lxml.etree.XMLParser(load_dtd=True)
-    doc        = lxml.etree.parse(doc_io, parser=doc_parser, base_url=doc_base_uri)
+    doc        = lxml.etree.parse(doc_io, parser=doc_parser,
+                                  base_url=doc_base_uri)
     def strparam_values(d):
         return dict(map(lambda t: (t[0],lxml.etree.XSLT.strparam(t[1])),
                         d.items()))
@@ -129,7 +130,8 @@ if __name__ == "__main__":
             exit()
         (xsl_fname, doc_fname) = (args[0], args[1])
         (xsl_io, xsl_base_uri) = (open(xsl_fname), xsl_fname)
-        (doc_io, doc_base_uri) = doc_io_and_base_uri(doc_fname, conf['base_uri'])
+        (doc_io, doc_base_uri) = doc_io_and_base_uri(doc_fname,
+                                                     conf['base_uri'])
         stringparams = conf['stringparams']
         extensions = load_extensions(conf['ext_scripts'])
 
