@@ -2,10 +2,11 @@
 # -*- coding: utf-8 -*-
 
 import sys, os, logging
-from types import ModuleType
-from optparse import OptionParser
+import types
+import optparse
 
-from lxml import etree
+import lxml
+import lxml.etree
 
 
 # lib
@@ -15,12 +16,12 @@ def apply(xsl_io, xsl_base_uri, doc_io, doc_base_uri,
     logging.basicConfig(level=logging.__dict__[loglevel])
     logging.info('Apply style')
 
-    xslt = etree.parse(xsl_io, base_url=xsl_base_uri)
-    transform  = etree.XSLT(xslt, extensions=extensions)
-    doc_parser = etree.XMLParser(load_dtd=True)
-    doc        = etree.parse(doc_io, parser=doc_parser, base_url=doc_base_uri)
+    xslt = lxml.etree.parse(xsl_io, base_url=xsl_base_uri)
+    transform  = lxml.etree.XSLT(xslt, extensions=extensions)
+    doc_parser = lxml.etree.XMLParser(load_dtd=True)
+    doc        = lxml.etree.parse(doc_io, parser=doc_parser, base_url=doc_base_uri)
     def strparam_values(d):
-        return dict(map(lambda t: (t[0],etree.XSLT.strparam(t[1])),
+        return dict(map(lambda t: (t[0],lxml.etree.XSLT.strparam(t[1])),
                         d.items()))
 
     result_tree = transform(doc, **strparam_values(stringparams))
@@ -30,7 +31,7 @@ def apply(xsl_io, xsl_base_uri, doc_io, doc_base_uri,
 # util
 
 def load_module(modname, io):
-    extm = ModuleType(modname)
+    extm = types.ModuleType(modname)
     exec io.read() in extm.__dict__
     return extm
 
@@ -61,15 +62,15 @@ def version_string():
         "libxml %(libxmlv)s (compiled %(libxmlcv)s)\n" \
         "libxslt %(libxsltv)s (compiled %(libxsltcv)s)" % \
         {'app': APP_NAME, 'appv': APP_VERSION,
-         'lxmlv':     '.'.join(map(str, etree.LXML_VERSION)),
-         'libxmlv':   '.'.join(map(str, etree.LIBXML_VERSION)),
-         'libxmlcv':  '.'.join(map(str, etree.LIBXML_COMPILED_VERSION)),
-         'libxsltv':  '.'.join(map(str, etree.LIBXSLT_VERSION)),
-         'libxsltcv': '.'.join(map(str, etree.LIBXSLT_COMPILED_VERSION))}
+         'lxmlv':     '.'.join(map(str, lxml.etree.LXML_VERSION)),
+         'libxmlv':   '.'.join(map(str, lxml.etree.LIBXML_VERSION)),
+         'libxmlcv':  '.'.join(map(str, lxml.etree.LIBXML_COMPILED_VERSION)),
+         'libxsltv':  '.'.join(map(str, lxml.etree.LIBXSLT_VERSION)),
+         'libxsltcv': '.'.join(map(str, lxml.etree.LIBXSLT_COMPILED_VERSION))}
 
 def opts_and_args():
-    op = OptionParser(usage   = APP_USAGE,
-                      version = version_string())
+    op = optparse.OptionParser(usage   = APP_USAGE,
+                               version = version_string())
     op.add_option("--base-uri",
                   dest = "base_uri",
                   help = "specify document base URI")
