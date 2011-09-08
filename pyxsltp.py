@@ -5,7 +5,6 @@ import sys, os, logging
 import types
 import optparse
 
-import lxml
 import lxml.etree
 
 
@@ -70,8 +69,8 @@ def version_string():
          'libxsltcv': '.'.join(map(str, lxml.etree.LIBXSLT_COMPILED_VERSION))}
 
 def opts_and_args():
-    op = optparse.OptionParser(usage   = APP_USAGE,
-                               version = version_string())
+    op = optparse.OptionParser(usage  =APP_USAGE,
+                               version=version_string())
     op.add_option("--base-uri",
                   dest = "base_uri",
                   help = "specify document base URI")
@@ -112,7 +111,7 @@ def load_extensions(ext_scripts, extensions={}):
     for s in ext_scripts:
         mname = os.path.splitext(os.path.basename(s))[0] # d/f.py => f
         extm = load_module(mname, open(s))
-        for k, v in extm.extensions.items(): extensions[k] = v
+        for k, v in extm.extensions.items(): extensions[k]=v
     return extensions
 
 # app
