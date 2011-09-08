@@ -117,37 +117,36 @@ def load_extensions(ext_scripts, extensions={}):
 
 # app
 
+def main(argv):
+    (opts, args) = opts_and_args()
+
+    conf = runtime_conf(opts, DEFAULT_CONF)
+    logging.basicConfig(level=logging.__dict__[conf['verbosity']])
+
+    if len(args) != 2:
+        logging.error("exactly 2 arguments required, but was: %s" % args)
+        exit()
+    (xsl_fname, doc_fname) = (args[0], args[1])
+    (xsl_io, xsl_base_uri) = (open(xsl_fname), xsl_fname)
+    (doc_io, doc_base_uri) = doc_io_and_base_uri(doc_fname,
+                                                 conf['base_uri'])
+    stringparams = conf['stringparams']
+    extensions = load_extensions(conf['ext_scripts'])
+
+    (result_tree, xslt_log) = apply(xsl_io, xsl_base_uri,
+                                    doc_io, doc_base_uri,
+                                    stringparams=stringparams,
+                                    extensions=extensions)
+
+    if xslt_log:
+        for err in xslt_log:
+            msg = '%s: %s (%s): %s\n' \
+                % (os.path.basename(sys.argv[0]),
+                   err.level_name, err.type_name, err.message)
+            sys.stderr.write(msg.encode('utf-8'))
+    if result_tree:
+        sys.stdout.write(str(result_tree))
+    return 1
+
 if __name__ == "__main__":
-
-    def main(argv):
-        (opts, args) = opts_and_args()
-
-        conf = runtime_conf(opts, DEFAULT_CONF)
-        logging.basicConfig(level=logging.__dict__[conf['verbosity']])
-
-        if len(args) != 2:
-            logging.error("exactly 2 arguments required, but was: %s" % args)
-            exit()
-        (xsl_fname, doc_fname) = (args[0], args[1])
-        (xsl_io, xsl_base_uri) = (open(xsl_fname), xsl_fname)
-        (doc_io, doc_base_uri) = doc_io_and_base_uri(doc_fname,
-                                                     conf['base_uri'])
-        stringparams = conf['stringparams']
-        extensions = load_extensions(conf['ext_scripts'])
-
-        (result_tree, xslt_log) = apply(xsl_io, xsl_base_uri,
-                                        doc_io, doc_base_uri,
-                                        stringparams=stringparams,
-                                        extensions=extensions)
-
-        if xslt_log:
-            for err in xslt_log:
-                msg = '%s: %s (%s): %s\n' \
-                    % (os.path.basename(sys.argv[0]),
-                       err.level_name, err.type_name, err.message)
-                sys.stderr.write(msg.encode('utf-8'))
-        if result_tree:
-            sys.stdout.write(str(result_tree))
-        return 1
-
     main(sys.argv)
