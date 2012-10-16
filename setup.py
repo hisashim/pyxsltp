@@ -1,12 +1,12 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from setuptools import setup, find_packages
+from distutils.core import setup
 from pyxsltp import __version__
 
 setup(
     name = "pyxsltp",
     version = __version__,
-    packages = find_packages(),
+    py_modules = ['pyxsltp'],
     scripts = ['pyxsltp'],
 )
