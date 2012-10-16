@@ -8,6 +8,10 @@ import optparse
 import lxml.etree
 
 
+# meta
+
+__version__ = '0.1.1'
+
 # lib
 
 def apply(xsl_io, xsl_base_uri, doc_io, doc_base_uri,
@@ -48,7 +52,7 @@ def ensure_trailing_sep(path, sep=os.path.sep):
 # ui
 
 APP_NAME    = 'PyXSLTP'
-APP_VERSION = 'DEVELOPMENT_VERSION'
+APP_VERSION = __version__
 APP_USAGE   = "Usage: %prog [options] stylesheet document\n" \
               "       ... | %prog --base-uri=URI [options] stylesheet -"
 DEFAULT_CONF = {'base_uri':     None,

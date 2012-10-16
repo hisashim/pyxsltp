@@ -5,7 +5,7 @@
 # metadata
 
 PRODUCT  = pyxsltp
-VERSION  = $(shell cat VERSION)
+VERSION  = $(shell $(PYTHON) setup.py --version)
 DATE     = $(shell dev/date.sh)
 REVISION = $(shell dev/revstr.sh)
 PACKAGE  = $(PRODUCT)
@@ -31,7 +31,7 @@ TESTLOGS = $(foreach t,\
                      $(wildcard test/test*.py),\
                      $(t:test/test%.py=test%py.log))
 
-DIST     = README LICENSE VERSION Makefile ChangeLog dev/ \
+DIST     = README LICENSE Makefile ChangeLog dev/ \
            pyxsltp.py setup.py
 
 RELEASE  = $(PRODUCT)-$(VERSION)
@@ -71,7 +71,7 @@ uninstall:
 	-rm -fr $(datadir)/doc/$(PACKAGE)
 
 pyxsltp: pyxsltp.py
-	cat $< | sed "s/'DEVELOPMENT_VERSION'/'$(VERSION)'/" > $@
+	cp $< $@
 
 # source package
 
