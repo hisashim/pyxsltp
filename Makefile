@@ -14,7 +14,7 @@ DEBREV   = $(shell head -n 1 debian/changelog \
 
 # programs
 
-PYTHON   = python2.6 -B -Wall
+PYTHON   = python -B -Wall
 TAR_XVCS = tar --exclude=".svn" --exclude=".git" --exclude=".hg"
 PBUILDER = cowbuilder
 PBOPTS   = --hookdir=pbuilder-hooks \
@@ -31,7 +31,7 @@ TESTLOGS = $(foreach t,\
                      $(wildcard test/test*.py),\
                      $(t:test/test%.py=test%py.log))
 
-DIST     = README LICENSE Makefile ChangeLog dev/ \
+DIST     = README.md LICENSE.md Makefile ChangeLog dev/ \
            pyxsltp.py setup.py
 
 RELEASE  = $(PRODUCT)-$(VERSION)
@@ -56,7 +56,7 @@ test%py.log: test/test%.py
 
 # installation
 
-install: pyxsltp README LICENSE ChangeLog
+install: pyxsltp README.md LICENSE.md ChangeLog
 	@if [ ! -d $(bindir) ]; then \
 	  mkdir -p $(bindir); \
 	fi
@@ -64,7 +64,7 @@ install: pyxsltp README LICENSE ChangeLog
 	  mkdir -p $(datadir)/doc/$(PACKAGE); \
 	fi
 	cp -Ppv pyxsltp $(bindir)/pyxsltp
-	cp -Ppv README LICENSE ChangeLog $(datadir)/doc/$(PACKAGE)
+	cp -Ppv README.md LICENSE.md ChangeLog $(datadir)/doc/$(PACKAGE)
 
 uninstall:
 	-rm -f $(bindir)/pyxsltp
