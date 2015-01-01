@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sys, os, logging
+sys.dont_write_bytecode=True
 import types
 import optparse
 

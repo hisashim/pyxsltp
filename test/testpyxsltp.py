@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sys, os, unittest
+sys.dont_write_bytecode=True
 from StringIO import StringIO
 from types import ModuleType
 
