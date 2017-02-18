@@ -20,7 +20,8 @@ class PyXSLTPTestCase(unittest.TestCase):
     def test_apply(self):
         expected = '<?xml version="1.0"?>\n' \
             '<html xmlns="http://www.w3.org/1999/xhtml" ' \
-            'xmlns:xlink="http://www.w3.org/1999/xlink"/>\n'
+            'xmlns:xlink="http://www.w3.org/1999/xlink" ' \
+            'xmlns:pref="http://www.w3.org/2002/Math/preference"/>\n'
         expected_log = ''
         (actual_tree, actual_log) = pyxsltp.apply(
             self.copy_xsl, "dummy url",
