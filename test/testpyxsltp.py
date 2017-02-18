@@ -15,8 +15,6 @@ import pyxsltp
 class PyXSLTPTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.copy_xsl  = StringIO(open('test/copy.xsl').read())
-        self.min_xhtml = StringIO(open('test/min.xhtml').read())
         self.ext_xsl   = StringIO(open('test/ext.xsl').read())
         self.ext_py    = StringIO(open('test/ext.py').read())
 
@@ -27,8 +25,8 @@ class PyXSLTPTestCase(unittest.TestCase):
             'xmlns:pref="http://www.w3.org/2002/Math/preference"/>\n'
         expected_log = ''
         (actual_tree, actual_log) = pyxsltp.apply(
-            self.copy_xsl, "dummy url",
-            self.min_xhtml, "dummy url",
+            open('test/copy.xsl'), "dummy url",
+            open('test/min.xhtml'), "dummy url",
             stringparams={'name': 'value with spaces'}
             )
         self.assertEqual(expected,str(actual_tree))
