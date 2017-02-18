@@ -26,8 +26,7 @@ def apply(xsl_io, xsl_base_uri, doc_io, doc_base_uri,
     doc        = lxml.etree.parse(doc_io, parser=doc_parser,
                                   base_url=doc_base_uri)
     def strparam_values(d):
-        return dict(map(lambda t: (t[0],lxml.etree.XSLT.strparam(t[1])),
-                        d.items()))
+        return dict([(t[0],lxml.etree.XSLT.strparam(t[1])) for t in list(d.items())])
 
     result_tree = transform(doc, **strparam_values(stringparams))
     xslt_log = transform.error_log
@@ -37,12 +36,12 @@ def apply(xsl_io, xsl_base_uri, doc_io, doc_base_uri,
 
 def load_module(modname, io):
     extm = types.ModuleType(modname)
-    exec io.read() in extm.__dict__
+    exec(io.read(), extm.__dict__)
     return extm
 
 def merge_dicts(dict_a, dict_b):
     merged = dict_a.copy()
-    for key, val in dict_b.items():
+    for key, val in list(dict_b.items()):
         if val: merged[key] = val
     return merged
 
@@ -116,7 +115,7 @@ def load_extensions(ext_scripts, extensions={}):
     for s in ext_scripts:
         mname = os.path.splitext(os.path.basename(s))[0] # d/f.py => f
         extm = load_module(mname, open(s))
-        for k, v in extm.extensions.items(): extensions[k]=v
+        for k, v in list(extm.extensions.items()): extensions[k]=v
     return extensions
 
 # app

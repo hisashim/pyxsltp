@@ -3,7 +3,10 @@
 
 import sys, os, unittest
 sys.dont_write_bytecode=True
-from StringIO import StringIO
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
 from types import ModuleType
 
 import pyxsltp
@@ -53,7 +56,7 @@ class PyXSLTPTestCase(unittest.TestCase):
 
     def test_ensure_trailing_sep(self):
         expected = ['foo/', 'bar/']
-        actual = map(pyxsltp.ensure_trailing_sep, ['foo', 'bar/'])
+        actual = list(map(pyxsltp.ensure_trailing_sep, ['foo', 'bar/']))
         self.assertEqual(expected, actual)
 
 def main(argv):
